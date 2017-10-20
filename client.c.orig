@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "client.h"
+
+
+#include <sys/types.h>
+#include <sys/socket.h>
+
+
+#include <netinet/in.h>
+
+#define PORT 9001
+#define BUFFET_SIZE 256
+
+
+int main(int argc, char **argv)
+{
+    //create a socket
+	int network_socket;
+    network_socket = socket(AF_INET , SOCK_STREAM , 0);
+	
+    //specify an adress for the socket
+    struct sockaddr_in server_address;
+    server_address.sin_family = AF_INET;
+    server_address.sin_port = htons(PORT);
+
+    //using in.h library to get any ip adress
+    server_address.sin_addr.s_addr = INADDR_ANY;
+
+    //If connection is 0 everything is ok ,
+    //If we get a value -1 , there is some error
+    int connection_status = connect(network_socket , (struct sockadrr *) &server_address ,sizeof(server_address));
+
+    //check for error with the connection
+    if(connection_status == -1){
+    	printf("There was an error making a connection to the remote socket\n\n");
+    	return -1;
+    }
+     else {
+
+	    //recieve data from the server
+	    char server_response[BUFFET_SIZE];
+	    recv(network_socket , &server_response , sizeof(server_response) ,0 );
+
+	    //Print out the server's response
+	    printf("The server sent the data : %s\n", server_response);
+
+
+	    // Close the socket
+	    close(network_socket);
+
+
+     }
+
+
+
+
+   // displayMenu();
+  
+	return 0;
+}
+
+
+/*
+ * This function will prompt the menu to the user
+ * The user will have choice from a to k.
+ * Each of the choice will be responsible to call another function
+ * That can do the task required by the user.
+ * 
+ */
+void displayMenu(){
+	
+	char choice ;
+
+	printf( "===============================================================================\n"
+			 	"\t Please select one of those options by typing the letter [a-k]\n"
+		    "===============================================================================\n\n"
+		   );
+
+
+	printf(  "(a) list all process ids\n"
+		   	 "(b) thread's IDs \n"
+		   	 "(c) child's PIDs \n"
+		   	 "(d) process name \n"
+		   	 "(e) state of process(D,R,S,T,t,W,X,Z) \n"
+		   	 "(f) command line of excuting process (cmdline) \n"
+		   	 "(g) parent's PID \n"
+		   	 "(h) all ancients of PIDs \n"
+		   	 "(i) virtual memory size (Vmsize) \n"
+		   	 "(j) physical memory size (VmRSS) \n"
+		   	 "(k) exit \n\n "
+
+		   	 "which one? "
+		   	);
+
+	scanf("%c" , &choice);
+
+    // I will take the use choice and call the correspondent function
+	switch(choice){
+		case 'a': printf("%c\n",choice ); break;
+		case 'b': printf("%c\n",choice ); break;
+		case 'c': printf("%c\n",choice ); break;
+		case 'd': printf("%c\n",choice ); break;
+		case 'e': printf("%c\n",choice ); break;
+		case 'f': printf("%c\n",choice ); break;
+		case 'g': printf("%c\n",choice ); break;
+		case 'h': printf("%c\n",choice ); break;
+		case 'i': printf("%c\n",choice ); break;
+		case 'j': printf("%c\n",choice ); break;
+		case 'k': printf("%c\n",choice ); break;
+        default : printf("Out of choice \n");
+	}
+
+
+
+
+
+}
+

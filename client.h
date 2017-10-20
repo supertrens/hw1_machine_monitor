@@ -4,4 +4,8 @@
 #include "protocol.h"
 
 
+
+//My Functions prototype her
+void displayMenu();
+
 #endif
